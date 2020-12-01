@@ -1,11 +1,11 @@
 import React from 'react';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import InputPage from './pages/InputPage/InputPage';
 import OutputPage from './pages/OutputPage/OutputPage';
 
 export default () => {
   return (
-    <BrowserRouter>
+    <HashRouter hashType={'slash'}>
       <Switch>
         <Route exact path={'/'}>
           <InputPage />
@@ -15,6 +15,6 @@ export default () => {
         </Route>
         <Redirect to={'/'} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };

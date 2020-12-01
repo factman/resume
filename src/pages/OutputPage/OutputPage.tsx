@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   AppBar,
   Box,
@@ -33,6 +33,12 @@ export default () => {
   const router = useHistory();
   const {themeMode, themeColor}: ThemeType = useSelector(({theme}) => theme);
   const {name, email, phone, dob, role}: ProfileType = useSelector(({profile}) => profile);
+
+  useEffect(() => {
+    if (!name || !email || !phone || !dob || !role) {
+      router.push('/');
+    }
+  });
 
   return (
     <MuiThemeProvider theme={theme({themeColor, themeMode})}>
