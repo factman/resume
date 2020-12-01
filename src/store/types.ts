@@ -12,7 +12,6 @@ export type ProfileType = {
   name: string;
   email: string;
   phone: string;
-  address: string;
   dob: Date;
   role: string;
 };

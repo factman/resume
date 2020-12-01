@@ -5,7 +5,7 @@ export type SetUserActionType = {
   profile: ProfileType;
 };
 
-export function Action_SetUser(profile: ProfileType): SetUserActionType {
+export function Action_SetProfile(profile: ProfileType): SetUserActionType {
   return {
     type: ACTION_TYPES.SET_PROFILE,
     profile,

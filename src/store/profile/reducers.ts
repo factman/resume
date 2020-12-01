@@ -5,7 +5,6 @@ const defaultState: ProfileType = {
   name: '',
   email: '',
   phone: '',
-  address: '',
   dob: new Date(),
   role: '',
 };
