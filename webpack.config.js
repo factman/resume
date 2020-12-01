@@ -1,14 +1,14 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
-const TerserPlugin = require('terser-webpack-plugin')
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const DashboardPlugin = require('webpack-dashboard/plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   devServer: {
@@ -16,7 +16,7 @@ module.exports = {
     hot: true,
     inline: true,
     overlay: true,
-    stats: 'minimal'
+    stats: 'minimal',
   },
   devtool: isProduction ? 'source-map' : 'eval-source-map',
   entry: './src/index',
@@ -30,17 +30,17 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              cacheDirectory: true
-            }
+              cacheDirectory: true,
+            },
           },
           {
             loader: 'ts-loader',
             options: {
               transpileOnly: true,
-              experimentalWatchApi: true
-            }
-          }
-        ]
+              experimentalWatchApi: true,
+            },
+          },
+        ],
       },
       {
         test: /\.jpg|png$/,
@@ -48,8 +48,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: isProduction ? '[name].[hash].[ext]' : '[name].[ext]'
-            }
+              name: isProduction ? '[name].[hash].[ext]' : '[name].[ext]',
+            },
           },
           {
             loader: 'image-webpack-loader',
@@ -57,74 +57,74 @@ module.exports = {
               bypassOnDebug: true,
               mozjpeg: {
                 progressive: true,
-                quality: 80
+                quality: 80,
               },
               optipng: {
-                optimizationLevel: 7
+                optimizationLevel: 7,
               },
               pngquant: {
-                enabled: false
-              }
-            }
-          }
-        ]
+                enabled: false,
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.svg/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          mimetype: 'image/svg+xml'
-        }
+          mimetype: 'image/svg+xml',
+        },
       },
       {
         test: /\.html$/,
         loader: 'html-loader',
         options: {
           interpolate: true,
-          minimize: isProduction
-        }
-      }
-    ]
+          minimize: isProduction,
+        },
+      },
+    ],
   },
   output: {
     filename: isProduction ? '[name].[hash].js' : '[name].js',
-    path: path.resolve('./dist')
+    path: path.resolve('./dist'),
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
         sourceMap: true,
-        extractComments: true
-      })
-    ]
+        extractComments: true,
+      }),
+    ],
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     modules: ['node_modules', 'src'],
-    plugins: [new TsconfigPathsPlugin()]
+    plugins: [new TsconfigPathsPlugin()],
   },
-  plugins: getPlugins()
-}
+  plugins: getPlugins(),
+};
 
 function getPlugins() {
   const plugins = [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`
+      'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
     }),
-    new ForkTsCheckerWebpackPlugin()
-  ]
+    new ForkTsCheckerWebpackPlugin(),
+  ];
 
   if (!isProduction) {
-    plugins.push(new DashboardPlugin())
+    plugins.push(new DashboardPlugin());
   }
 
   if (process.env.WEBPACK_BUNDLE_ANALYZER) {
-    plugins.push(new BundleAnalyzerPlugin())
+    plugins.push(new BundleAnalyzerPlugin());
   }
 
-  return plugins
+  return plugins;
 }
