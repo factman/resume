@@ -36,7 +36,7 @@ export default () => {
 
   useEffect(() => {
     if (!name || !email || !phone || !dob || !role) {
-      router.goBack();
+      router.push('/');
     }
   });
 
